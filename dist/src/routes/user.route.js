@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const user_controller_1 = require("../controller/user.controller");
+const auth_passport_1 = require("../middleware/auth.passport");
+const validation_middleware_1 = require("../middleware/validation.middleware");
+const user_schema_1 = require("../schema/user.schema");
+const fileUpload_1 = require("../middleware/fileUpload");
+const routes = (0, express_1.Router)();
+routes.post('/change_pasword', auth_passport_1.authChecker, (0, validation_middleware_1.schemaValidator)(user_schema_1.changePasswordSchema), user_controller_1.changePassword);
+routes.put('/me', auth_passport_1.authChecker, fileUpload_1.upload.single("profilePic"), user_controller_1.updateUserProfile);
+exports.default = routes;
